@@ -62,4 +62,7 @@ function dividedBy(a) {
 }
 
 let ans = four(plus(nine()))
-console.log(ans)
+let ans2 = seven(times(five()))
+let ans3 = eight(minus(three()))
+let ans4 = six(dividedBy(two()))
+console.log(ans,ans2,ans3,ans4)
