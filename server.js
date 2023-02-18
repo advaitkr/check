@@ -16,16 +16,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const router = express.Router()
+router.get("/",(req,res)=>{
+    res.send({"msg":"hello"})
+})
 router.post('/signup',signup)
 router.post('/signin',signin)
 router.get('/getall',protect,getAll)
 router.post('/getresult/:studentId/:masterId',activity)
 router.get('/activitylog',protect,restrictTo('student'),activitylog)
-app.use('/.netlify/functions/server', router);
+app.use('/.netlify/functions/api', router);
 
-module.exports = app;
 module.exports.handler = serverless(app);
 
-// app.listen(PORT,()=>{
-//     console.log(`Server is running at Port ${PORT}`)
-//   })
+app.listen(PORT,()=>{
+    console.log(`Server is running at Port ${PORT}`)
+  })
