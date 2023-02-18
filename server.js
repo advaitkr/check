@@ -10,6 +10,9 @@ const {signup,signin,protect,getAll,activity,activitylog,restrictTo} = require("
 dbConnect()
 app.use(express.json())
 const router = express.Router()
+router.get('/hello',(req,res)=>{
+    res.send({"msg":"hello"})
+})
 router.post('/signup',signup)
 router.post('/signin',signin)
 router.get('/getall',protect,getAll)
