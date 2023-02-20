@@ -48,7 +48,7 @@ exports.signin = async (req, res, next) => {
         const token = jwt.sign({
             email: existingUser.email,
             id: existingUser._id
-        }, process.env.SECRET_KEY);
+        }, process.env.SECRET_KEY,{expiresIn:'30h'});
         res.status(201).send({ user: existingUser, token: token, "msg": "signedIn" })
 
     }
@@ -72,7 +72,7 @@ exports.protect = async (req, res, next) => {
         return next(new Error('You are not logged in!,Please log in to get access'))
     }
     const decoded = await promisify(jwt.verify)(token, process.env.SECRET_KEY)
-    // console.log(decoded)
+    console.log(decoded)
     const freshUser = await User.findById(decoded.id)
     if (!freshUser) {
         return next(new Error('The token belong to the user doesn no exists'))
@@ -150,3 +150,11 @@ exports.activitylog = async(req,res,next)=>{
 
 }
 
+exports.logout = async(req,res)=>{
+
+  req.user.deleteToken(req.token,(err,user)=>{
+     if(err) return res.status(400).send(err)
+     res.status(200).send({"msg":"logout"})
+  })
+
+}
