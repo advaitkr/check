@@ -8,7 +8,7 @@ const cors = require('cors');
 require('dotenv').config()
 const dbConnect = require("./config/config")
 const PORT = process.env.PORT || 5000
-const {signup,signin,protect,getAll,activity,activitylog,restrictTo} = require("./controllers/userController")
+const {signup,signin,protect,getAll,activity,activitylog,restrictTo,logout} = require("./controllers/userController")
 dbConnect()
 app.use(express.json())
 app.use(cors());
@@ -24,6 +24,7 @@ router.post('/signin',signin)
 router.get('/getall',protect,getAll)
 router.post('/getresult/:studentId/:masterId',activity)
 router.get('/activitylog',protect,restrictTo('student'),activitylog)
+router.get('logout',protect,logout)
 app.use('/api', router);
 
 module.exports.handler = serverless(app);
